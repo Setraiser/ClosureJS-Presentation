@@ -1,0 +1,50 @@
+.slide-content {
+    width: 90%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.slides {
+    width: 100% !important; 
+}
+
+.code-wrapper {
+    display: flex !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+}
+
+.reveal pre {
+    width: 40%;
+    font-size: 18px;
+}
+
+li {
+    margin-top: 20px;
+    font-size: 32px;
+    color: #00ffe6;
+}
+
+
+.termin {
+    font-size: 45px;
+    line-height: 27px;
+    color: #776767;
+    font-weight: bold;
+}
+
+.t-desc {
+    font-size: 35px;
+    line-height: 22px;
+}
+
+.reveal pre code {
+    max-height: 500px;
+    overflow: hidden !important;
+}
+
+.end {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

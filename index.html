@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="css/presentation.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section>
+						<h1 class="title">Clousers</h1>
+						<div class="slide-content">
+							<div class="fragment fade-in">
+								<span class="termin">Clousers</span>
+								<span class="t-desc"> - is a function that remembers its outer variables and can access them.</span>
+							</div>
+						</div>
+						
+					</section>
+					<section>
+						<h1 class="title">Scope</h1>
+						<div class="slide-content">
+							<div class="fragment fade-in">
+								<span class="termin">Scope</span>
+								<span class="t-desc"> - it is a property of functions that records the chain of external environments of a function when it is created.</span>
+							</div>
+							<ul>
+								<li class="fragment">Each function, when created, receives a [[Scope]] link to an object with variables in the context of which it was created.</li>
+								<li class="fragment">When the function starts, a new object with LexicalEnvironment variables is created. It gets a reference to an external variable object from [[Scope]].</li>
+								<li class="fragment">When searching for variables, it is carried out first in the current variable object, and then through this link.</li>
+							</ul>
+						</div>
+					</section>
+				</section>
+				<section>
+					<pre>
+						<code class="example">
+var a = 50;
+function foo() {
+  var a = 15;
+  function bar() {
+  console.log(a);
+}
+  bar();
+}
+
+foo(); //15
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+						<code>
+function foo() {
+	console.log(a);
+}
+
+function baz() {
+	var a = 10;
+	foo();
+}
+
+baz(); //a is not defined
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					
+						<pre>
+							<code>
+function makeCounter() {
+	var k = 1;
+	return function() {
+		return k++;
+	}
+}
+
+var count = makeCounter();
+var count2 = makeCounter();
+
+console.log(count()); //1
+console.log(count()); //2
+console.log(count2()); //1
+console.log(count2()); //2
+							</code>
+						</pre>
+					</section>
+					<section>
+						<div class="code-wrapper">
+							<pre>
+								<code class="language-js">
+for (var i = 0; i &lt; 3; i++) {
+	setTimeout(function() {console.log(i);}, 0);
+}
+/*3, 3, 3*/
+								</code>
+							</pre>
+							<pre class="fragment">
+								<code class="language-js">
+for (let i = 0; i &lt; 3; i++) {
+	setTimeout(function() {console.log(i);}, 0);
+}
+/*0, 1, 2*/
+								</code>
+							</pre>
+							<pre class="fragment">
+								<code class="language-js">
+for (var i = 0; i &lt; 3; i++) {
+	setTimeout(function(j) {console.log(j);}, 0, j);
+}
+/*0, 1, 2*/
+							</code>
+						</pre>
+					</div>	
+				</section>
+				<section>
+					<div class="code-wrapper">
+						<pre>
+							<code class="language-js"> 
+let i = 0;
+while(i &lt; 3) {
+	setTimeout(function(){console.log(i)}, 0); 
+	i++;
+}
+//3, 3 ,3
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="language-js">
+let i = 0;
+while(i &lt; 3) {
+	setTimeout(function(j){console.log(j)}, 0, i);  
+	i++;
+}
+//0, 1, 2
+							</code>
+						</pre>
+						<pre class="fragment" >
+							<code class="language-js">
+let i = 0;
+while(i &lt; 3) {
+	let j = i;
+	setTimeout(function(){console.log(j)}, 0);
+	i++;
+}
+//0, 1, 2
+							</code>
+						</pre>
+					</div>
+					
+				</section>
+				<section>
+					<div class="slide-content end">
+						<h2>Thank you for the attention</h2>
+					</div>
+				</section>
+					
+				
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
